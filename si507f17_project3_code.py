@@ -162,7 +162,6 @@ class NationalSite(object):
             a_tag = park_soup.find_all('a')[2]
             self.url = a_tag['href']
             self.type = park_soup.find('h2').text or 'None'
-
             self.description = park_soup.find('p').text.strip()
                 # print(self.description)
 
@@ -177,7 +176,8 @@ class NationalSite(object):
             basic_info = requests.get(self.url)
             basic_info_soup = BeautifulSoup(basic_info.content, 'html.parser')
             full_address = basic_info_soup.find("div",{"itemprop":"address"}).text.strip()
-            full_address = full_address.replace('\n',"/")
+            full_address = full_address.replace('\n','/').replace('///','/').replace('//', '/')
+
 
             return full_address
         except:
@@ -188,12 +188,12 @@ class NationalSite(object):
 
 
 #Code to test class constructor#
+# sample_test = get_park_list(michigan_soup)[4]
+# x = NationalSite(sample_test)
+# print(x.url)
+# print(x.get_mailing_address())
 
-sample_test = get_park_list(california_soup)[1]
-x = NationalSite(sample_test)
-print(x.url)
 
-print(x.get_mailing_address())
 ## Recommendation: to test the class, at various points, uncomment the following code and invoke some of the methods / check out the instance variables of the test instance saved in the variable sample_inst:
 
 # f = open("sample_html_of_park.html",'r')
@@ -228,12 +228,12 @@ for park in michigan_list:
 
 
 ##Code to help you test these out:
-for p in california_natl_sites:
-	print(p)
-for a in arkansas_natl_sites:
-	print(a)
-for m in michigan_natl_sites:
-	print(m)
+# for p in california_natl_sites:
+# 	print(p)
+# for a in arkansas_natl_sites:
+# 	print(a)
+# for m in michigan_natl_sites:
+# 	print(m)
 
 
 
