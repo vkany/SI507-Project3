@@ -29,7 +29,7 @@ kitty_soup = BeautifulSoup(gallery_data, 'html.parser')
 
 kitty_imgs = kitty_soup.find_all('img') # all_imgs is a list of beautifulsoup instances
 for i in kitty_imgs:
-    print(i.get('alt',"No alt text!"))
+    print(i.get('alt',"No alternative text provided!"))
 
 
 ######### PART 1 #########
