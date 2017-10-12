@@ -173,15 +173,14 @@ class NationalSite(object):
 
     def get_mailing_address(self):
         try:
-            basic_info = requests.get(self.url)
-            basic_info_soup = BeautifulSoup(basic_info.content, 'html.parser')
+            basic_info = requests.get(self.url).text
+            basic_info_soup = BeautifulSoup(basic_info, 'html.parser')
             full_address = basic_info_soup.find("div",{"itemprop":"address"}).text.strip()
             full_address = full_address.replace('\n','/').replace('///','/').replace('//', '/')
 
-
             return full_address
         except:
-            return "None"
+            return ""
 
     def __contains__(self, astring):
         return astring in self.name
